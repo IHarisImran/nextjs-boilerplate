@@ -6,12 +6,14 @@ export const metadata = getMetadata({
   desc: "..."
 });
 
+export const dynamic = 'force-dynamic';
+
 const Page = async () => {
   const headersList = await headers(),
     middlewareSet = headersList.get('dataFromMiddleware');
 
   return (
-    <>Static Page</>
+    <>Dynamic Page</>
   );
 };
 

@@ -1,3 +1,4 @@
+import { getProduct } from "@/apiHandlers/products";
 import { getMetadata } from "@/app/lib/helper";
 import Card from "@/component/Card";
 import { notFound } from "next/navigation";
@@ -13,10 +14,9 @@ export async function generateMetadata({ params }) {
 };
 
 const getData = async id => {
-    const res = await fetch(`https://fakestoreapi.com/products/${id}`, { cache: 'force-cache' }),
-        data = await res.json();
-    if (!data || res.status !== 200) notFound();
-    return data;
+    const { success, response } = await getProduct(id);
+    if (!success && response == 404) notFound();
+    return success ? response : null;
 };
 
 const DynamicSSR = async (props) => {

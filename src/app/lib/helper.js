@@ -63,3 +63,5 @@ export const formatDateTime = (str) => {
 
     return `${pad(date)}/${pad(month)}/${year} ${pad(hours == '00' ? '12' : hours)}:${pad(minutes)} ${timezone}`;
 }; const pad = e => { return e.toString().padStart(2, 0) };
+
+export const responseMaker = ({ success, response }) => { return { success, response } };

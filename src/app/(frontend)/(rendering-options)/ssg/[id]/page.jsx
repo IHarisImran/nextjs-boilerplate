@@ -1,3 +1,4 @@
+import { getProduct, getProducts } from "@/apiHandlers/products";
 import { getMetadata } from "@/app/lib/helper";
 import Card from "@/component/Card";
 import { notFound } from "next/navigation";
@@ -13,16 +14,15 @@ export async function generateMetadata({ params }) {
 };
 
 const getData = async id => {
-    const res = await fetch(`https://fakestoreapi.com/products/${id}`, { cache: 'force-cache' }),
-        data = await res.json();
-    if (!data || res.status !== 200) notFound();
-    return data;
+    const { success, response } = await getProduct(id);
+    if (!success && response == 404) notFound();
+    return success ? response : null;
 };
 
 export async function generateStaticParams() {
-    const res = await fetch('https://fakestoreapi.com/products', { cache: 'force-cache' }),
-        data = await res.json();
-    return data.map(post => ({ id: String(post.id) }));
+    const { success, response } = await getProducts();
+    if (!success) throw new Error("Failed to get the data.");
+    return response.map(post => ({ id: String(post.id) }));
 };
 
 const DynamicSSG = async (props) => {

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getMetadata } from "@/app/lib/helper";
 import Card from "@/component/Card";
+import { getProducts } from "@/apiHandlers/products";
 
 export const metadata = getMetadata({
   title: "SSR Products",
@@ -18,11 +19,12 @@ const getData = async id => {
 };
 
 const SSR = async () => {
-  const res = await getData();
+  const { success, response } = await getProducts();
+  if (!success) toast.error("Failed to get the data.")
 
   return (
     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {(res || []).map((i, j) => (
+      {(response || []).map((i, j) => (
         <Link key={j} href={String(i.id)}>
           <Card data={i} />
         </Link>

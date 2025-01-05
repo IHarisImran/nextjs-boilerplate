@@ -1,7 +1,8 @@
+import { getProducts } from "@/apiHandlers/products";
 import { getMetadata } from "@/app/lib/helper";
 import Card from "@/component/Card";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const metadata = getMetadata({
   title: "ISR Products",
@@ -10,19 +11,13 @@ export const metadata = getMetadata({
 
 export const dynamic = 'force-dynamic';
 
-const getData = async id => {
-  const res = await fetch('https://fakestoreapi.com/products', { cache: 'force-cache' }),
-      data = await res.json();
-  if (!data || res.status !== 200) notFound();
-  return data;
-};
-
 const ISR = async () => {
-  const res = await getData();
+  const { success, response } = await getProducts();
+  if (!success) toast.error("Failed to get the data.");
 
   return (
     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {(res || []).map((i, j) => (
+      {(response || []).map((i, j) => (
         <Link key={j} href={String(i.id)}>
           <Card data={i} />
         </Link>
