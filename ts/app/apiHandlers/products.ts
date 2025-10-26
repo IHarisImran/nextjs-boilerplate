@@ -1,4 +1,4 @@
-import { responseMaker } from "@/app/lib/helper";
+import { responseMaker } from "utilsify-js";
 
 export const getProducts = async () => {
     try {
@@ -12,7 +12,7 @@ export const getProducts = async () => {
     };
 };
 
-export const getProduct = async id => {
+export const getProduct = async (id: number) => {
     try {
         const res = await fetch(`https://fakestoreapi.com/products/${id}`, { cache: 'force-cache' });
         if (!res.ok) throw res.status;
