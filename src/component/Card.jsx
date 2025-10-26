@@ -10,9 +10,9 @@ const Card = ({ data }) => {
                 height={120}
                 loading="lazy"
                 alt="Picture of the author"
-                className="mx-auto flex-shrink-0"
+                className="mx-auto shrink-0"
             />
-            <div className="text-[10px] sm:text-xs font-light mt-4 flex-grow flex flex-col justify-between">
+            <div className="text-[10px] sm:text-xs font-light mt-4 grow flex flex-col justify-between">
                 <div>
                     <h1 className="text-sm sm:text-base font-medium mb-1 line-clamp-2">{data.title}</h1>
                     <p className="line-clamp-3">{data.description}</p>
